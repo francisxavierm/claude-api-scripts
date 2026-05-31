@@ -72,7 +72,7 @@ def web_search(query: str) -> str:
             lines.append(f"[{r['title']}]({r['url']})\n{r['content']}\n")
         return "\n".join(lines) if lines else "No results found."
 
-# --- Brave Search fallback ---
+    # --- Brave Search fallback ---
     brave_key = os.getenv("BRAVE_API_KEY")
     if brave_key:
         import requests
