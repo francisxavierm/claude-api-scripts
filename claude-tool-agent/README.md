@@ -52,3 +52,7 @@ echo $ANTHROPIC_API_KEY
 If it shows blank, run:
 export $(cat .env | xargs)
 
+
+## Demo
+
+[Watch the 60-second walkthrough] https://www.loom.com/share/24d489b70897497ea0035c1ee8c85a4e
