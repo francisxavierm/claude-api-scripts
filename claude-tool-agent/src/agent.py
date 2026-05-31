@@ -1,5 +1,4 @@
 # src/agent.py
-from urllib import response
 
 from urllib import response
 
@@ -20,12 +19,22 @@ def run_agent(user_message: str, verbose: bool = True) -> str:
 
     while True:
         # ── Call the API
-        response = client.messages.create(
-            model=MODEL,
-            max_tokens=MAX_TOKENS,
-            tools=TOOL_SCHEMAS,
-            messages=messages
-        )
+        try:
+            response = client.messages.create(
+                model=MODEL,
+                max_tokens=MAX_TOKENS,
+                tools=TOOL_SCHEMAS,
+                system=(
+                    "You are a helpful assistant with access to web search and local file tools. "
+                    "Use tools whenever they would help you give a more accurate or complete answer. "
+                    "Always confirm file writes by stating the path and byte count."
+                ),
+                messages=messages
+            )
+        except anthropic.errors.APIError as e:
+            print(f"[API error] {e}")
+            return "I encountered an API error. Please try again."
+        
         if verbose:
             print(f"\n[stop_reason: {response.stop_reason}]")
 
@@ -42,24 +51,24 @@ def run_agent(user_message: str, verbose: bool = True) -> str:
 
         if response.stop_reason == "tool_use":
         # 1. Add Claude's response to the message history
-        messages.append({"role": "assistant", "content": response.content})
+            messages.append({"role": "assistant", "content": response.content})
 
         # 2. Execute every tool Claude requested in this turn
-        tool_results = []
-        for block in response.content:
-            if block.type == "tool_use":
-                if verbose:
-                    print(f"[tool_call] {block.name}({block.input})")
-                result = execute_tool(block.name, block.input)
+            tool_results = []
+            for block in response.content:
+                if block.type == "tool_use":
+                    if verbose:
+                        print(f"[tool_call] {block.name}({block.input})")
+                    result = execute_tool(block.name, block.input)
 
-                if verbose:
-                    preview = result[:200] + "…" if len(result) > 200 else result
-                    print(f"[tool_result] {preview}")
-                tool_results.append({
-                    "type": "tool_result",
-                    "tool_use_id": block.id,
-                    "content": result
-                })
+                    if verbose:
+                        preview = result[:200] + "…" if len(result) > 200 else result
+                        print(f"[tool_result] {preview}")
+                    tool_results.append({
+                        "type": "tool_result",
+                        "tool_use_id": block.id,
+                        "content": result
+                    })
 
         # 3. Append all tool results as a single user message
         messages.append({"role": "user", "content": tool_results})
