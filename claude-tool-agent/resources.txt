@@ -1,0 +1,10 @@
+Top 3 Resources for Building AI Agents:
+
+1. Learning How to Build AI Agents (Medium)
+   https://medium.com/@neriasebastien/learning-how-to-build-ai-agents-7349f3821c3d
+
+2. 11 Online Courses To Master AI Agents (Forbes)
+   https://www.forbes.com/sites/bernardmarr/2025/06/17/the-11-best-online-courses-to-master-ai-agents
+
+3. Build AI Agents with AWS - AI Agent Learning Series (AWS)
+   https://aws.amazon.com/marketplace/build-learn/ai-agent-learning-series

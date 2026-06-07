@@ -1,0 +1,8 @@
+Three Interesting Facts About Python
+=====================================
+
+1. Python was named after a TV show, not a snake: The creator of Python, Guido van Rossum, named the language after the British comedy show "Monty Python's Flying Circus." He was a huge fan of the show and wanted a unique and interesting name for his new programming language.
+
+2. Python is older than Java: Many people assume Java came first, but Python was actually created earlier. Guido van Rossum began implementing Python in 1989, while Java was released in 1995. That makes Python about 6 years older than Java!
+
+3. Python has a hidden Easter egg called "The Zen of Python": If you type `import this` in a Python interpreter, it reveals a collection of 19 guiding design principles for writing Python code, written by Tim Peters. These include famous aphorisms like "Beautiful is better than ugly" and "Simple is better than complex."

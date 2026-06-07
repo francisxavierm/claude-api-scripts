@@ -1,0 +1,11 @@
+Three Interesting Facts About the Python Programming Language
+==============================================================
+
+1. Python was named after Monty Python, not the snake.
+   Python's creator, Guido Van Rossum, named the language after the British comedy troupe "Monty Python" from the 1970s — not after the reptile. He was a fan of their show "Monty Python's Flying Circus."
+
+2. Python is older than Java.
+   Python was created in December 1989 by Guido Van Rossum as a holiday hobby project and first released in 1991, making it older than Java, which was released in 1995.
+
+3. Python has a hidden Easter egg poem.
+   If you type "import this" in a Python interpreter, it displays "The Zen of Python" — a collection of 19 guiding principles (aphorisms) for writing computer programs in Python, written by Tim Peters.
