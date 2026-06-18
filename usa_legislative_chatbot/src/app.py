@@ -10,9 +10,17 @@ st.set_page_config(
 
 @st.cache_resource(show_spinner='Building knowledge base...')
 def load_kb():
-    # Read API key from Streamlit secrets if available
-    if 'ANTHROPIC_API_KEY' in st.secrets:
-        os.environ['ANTHROPIC_API_KEY'] = st.secrets['ANTHROPIC_API_KEY']
+    # Load .env for local development
+    from dotenv import load_dotenv
+    load_dotenv()
+
+    # On Streamlit Cloud, .env doesn't exist — read from st.secrets instead
+    if not os.environ.get('ANTHROPIC_API_KEY'):
+        try:
+            os.environ['ANTHROPIC_API_KEY'] = st.secrets['ANTHROPIC_API_KEY']
+        except Exception:
+            pass  # No secrets.toml locally — key already loaded from .env
+
     from ingest import ingest_all, get_collection
     col = get_collection()
     if col.count() == 0:
