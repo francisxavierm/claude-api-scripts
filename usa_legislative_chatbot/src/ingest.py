@@ -5,7 +5,7 @@ from chromadb.utils import embedding_functions
 CHUNK_SIZE = 512 # tokens — captures one legislative provision
 CHUNK_OVERLAP = 64 # tokens — preserves cross-sentence context
 COLLECTION = 'usa_legislative_kb'
-DB_PATH = './chroma_db'
+DB_PATH = str(pathlib.Path(__file__).parent.parent / 'chroma_db')
 
 def get_collection():
     client = chromadb.PersistentClient(path=DB_PATH)
@@ -46,7 +46,11 @@ def ingest_chunks(chunks: list[dict]) -> None:
         metadatas = [{'source': c['source']} for c in chunks],
     )
 
-def ingest_all(pdf_dir: str = 'data/raw_pdfs') -> None:
+def ingest_all(pdf_dir: str = None) -> None:
+    if pdf_dir is None:
+        # Resolve relative to this file's location so it works
+        # regardless of where Streamlit Cloud runs the process from
+        pdf_dir = str(pathlib.Path(__file__).parent.parent / 'data' / 'raw_pdfs')
     paths = list(pathlib.Path(pdf_dir).glob('**/*.pdf'))
     print(f'Found {len(paths)} PDFs')
     for path in paths:
