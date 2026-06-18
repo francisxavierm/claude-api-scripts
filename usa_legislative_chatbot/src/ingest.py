@@ -1,4 +1,4 @@
-import fitz # PyMuPDF
+from pypdf import PdfReader
 import pathlib, tiktoken, chromadb
 from chromadb.utils import embedding_functions
 
@@ -15,11 +15,11 @@ def get_collection():
     )
 
 def extract_text(pdf_path: str) -> str:
-    doc = fitz.open(pdf_path)
-    pages = []
-    for page in doc:
-        text = page.get_text('text')
-        if text.strip():
+    reader = PdfReader(pdf_path)
+    pages  = []
+    for page in reader.pages:
+        text = page.extract_text()
+        if text and text.strip():
             pages.append(text)
     return '\n'.join(pages)
 
@@ -54,7 +54,7 @@ def ingest_all(pdf_dir: str = 'data/raw_pdfs') -> None:
         text = extract_text(str(path))
         chunks = chunk_text(text, source=path.name)
         ingest_chunks(chunks)
-        print(f' Chunks: {len(chunks)}')
-        print(f'Done. Total chunks: {get_collection().count()}')
+        print(f'  Chunks: {len(chunks)}')
+    print(f'Done. Total chunks: {get_collection().count()}')
 if __name__ == '__main__':
     ingest_all()
