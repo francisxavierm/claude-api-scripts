@@ -2,7 +2,7 @@
 
 A document-grounded Q&A chatbot that answers questions about US federal legislation — bill provisions, CBO scores, Senate rules, and legislative procedures — using Retrieval-Augmented Generation (RAG) with Claude as the language model.
 
-**Live app:** [Add your Streamlit URL here]
+**Live app:** [https://claude-api-scripts-usa-legislative-chatbot.streamlit.app]
 
 ---
 
